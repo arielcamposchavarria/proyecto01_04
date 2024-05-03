@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from "react";
 import DataTable from "react-data-table-component";
+import Modal from "react-modal";
 
 function TableProducts() {
   const [records, setRecords] = useState([]);
   const [loading, setLoading] = useState(true);
-  
+  const [searchTerm, setSearchTerm] = useState("");
+  const [deleteId, setDeleteId] = useState(null);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
 
   const columns = [
     {
@@ -27,6 +30,12 @@ function TableProducts() {
       selector: (row) => row.category,
       sortable: true
     },
+    {
+      name: "Actions",
+      cell: (row) => (
+        <button onClick={() => handleDelete(row.id)}>Eliminar</button>
+      )
+    }
   ];
 
   useEffect(() => {
@@ -43,28 +52,53 @@ function TableProducts() {
   }, []);
 
   const handleChange = (e) => {
-    const filteredRecords = records.filter((record) => {
-      return record.title.toLowerCase().includes(e.target.value.toLowerCase());
-    });
-    setRecords(filteredRecords);
+    setSearchTerm(e.target.value.toLowerCase());
   };
-  
+
+  const handleDelete = (id) => {
+    setDeleteId(id);
+    setShowDeleteModal(true);
+  };
+
+  const confirmDelete = () => {
+    const updatedRecords = records.filter((record) => record.id !== deleteId);
+    setRecords(updatedRecords);
+    setDeleteId(null);
+    setShowDeleteModal(false);
+  };
+
+  const cancelDelete = () => {
+    setDeleteId(null);
+    setShowDeleteModal(false);
+  };
+
+  const filteredRecords = records.filter((record) =>
+    record.title.toLowerCase().includes(searchTerm)
+  );
 
   return (
     <div>
       <input type="text" onChange={handleChange} />
 
-        <DataTable
-          title="Datos de Productos"
-          columns={columns}
-          data={records}
-          selectableRows
-          pagination
-          onSelectedRowsChange={(selectedRows) => console.log(selectedRows)}
-          fixedHeader
-        />
+      <DataTable
+        title="Datos de Productos"
+        columns={columns}
+        data={filteredRecords}
+        selectableRows
+        pagination
+        onSelectedRowsChange={(selectedRows) => console.log(selectedRows)}
+        fixedHeader
+      />
+
+      <Modal isOpen={showDeleteModal}>
+        <h2>Confirmar Eliminación</h2>
+        <p>¿Estás seguro de que deseas eliminar este registro?</p>
+        <button onClick={confirmDelete}>Confirmar</button>
+        <button onClick={cancelDelete}>Cancelar</button>
+      </Modal>
     </div>
   );
 }
+
 
 export default TableProducts;
