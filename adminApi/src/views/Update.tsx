@@ -5,6 +5,7 @@ import { Link, useNavigate, useParams } from 'react-router-dom'
 function Update() {
   //  const [data, setData] = useState([])
     const {id} = useParams();
+    const navigate = useNavigate();
 
     const [values, setValues] = useState({
         title: '',
@@ -14,16 +15,16 @@ function Update() {
         image: ''
     })
 
-const navigate = useNavigate();
+
     useEffect(() => {
     axios.get('https://fakestoreapi.com/products/'+ id)
     .then(res => {
         setValues(res.data)
     })
     .catch(err => console.log(err))
-}, [])
+}, [id])
 
-const handleUpdate = (event: { preventDefault: () => void; }) => {
+/*const handleUpdate = (event: { preventDefault: () => void; }) => {
     event.preventDefault();
     axios.put('https://fakestoreapi.com/products/' + id, values) 
     .then(res => {
@@ -31,7 +32,32 @@ const handleUpdate = (event: { preventDefault: () => void; }) => {
         navigate('/')
     })
     .catch(err => console.log(err))
-}
+}*/
+const handleChange = (e) => {
+    const { name, value } = e.target;
+    setValues(prevValues => ({
+        ...prevValues,
+        [name]: value
+    }));
+};
+const handleUpdate = (event) => {
+    event.preventDefault();
+    axios.put('https://fakestoreapi.com/products/' + id, values) 
+    .then(res => {
+        //setValues(res.data)
+        //console.log(res);
+        // Almacenar en localStorage y navegar
+        localStorage.setItem(`product_${id}`, JSON.stringify(res.data));
+        setValues(res.data);
+        navigate('/');
+    })
+    .catch(err => console.log(err));
+};
+    // Aquí podrías guardar los valores en localStorage
+    // Por ejemplo:
+    /*localStorage.setItem(`product_${id}`, JSON.stringify(values));
+    navigate('/');*/
+
 
   return (
     <div className='d-flex w-100 vh-100 justify-content-center align-items-center bg light'>
@@ -68,5 +94,6 @@ const handleUpdate = (event: { preventDefault: () => void; }) => {
 </div>
   )
 }
+
 
 export default Update
