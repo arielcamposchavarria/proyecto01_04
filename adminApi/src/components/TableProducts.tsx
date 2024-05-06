@@ -1,13 +1,17 @@
 import React, { useState, useEffect } from "react";
 import DataTable from "react-data-table-component";
 import Modal from "react-modal";
+import { useHistory } from "react-router-dom";
 
 function TableProducts() {
   const [records, setRecords] = useState([]);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState("");
   const [deleteId, setDeleteId] = useState(null);
+  const [editRecord, setEditRecord] = useState(null);
+  const [showEditModal, setShowEditModal] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const history = useHistory();
 
   const columns = [
     {
@@ -33,7 +37,10 @@ function TableProducts() {
     {
       name: "Actions",
       cell: (row) => (
-        <button onClick={() => handleDelete(row.id)}>Eliminar</button>
+        <>
+          <button onClick={() => handleEdit(row.id)}>Editar</button>
+          <button onClick={() => handleDelete(row.id)}>Eliminar</button>
+        </>
       )
     }
   ];
@@ -55,6 +62,7 @@ function TableProducts() {
     setSearchTerm(e.target.value.toLowerCase());
   };
 
+
   const handleDelete = (id) => {
     setDeleteId(id);
     setShowDeleteModal(true);
@@ -70,6 +78,25 @@ function TableProducts() {
   const cancelDelete = () => {
     setDeleteId(null);
     setShowDeleteModal(false);
+  };
+
+  const handleEdit = (id) => {
+    const record = records.find((rec) => rec.id === id);
+    setEditRecord(record);
+    setShowEditModal(true);
+  };
+
+  const handleUpdate = (e) => {
+    e.preventDefault();
+    const updatedRecords = records.map((rec) => {
+      if (rec.id === editRecord.id) {
+        return editRecord;
+      } else {
+        return rec;
+      }
+    });
+    setRecords(updatedRecords);
+    setShowEditModal(false);
   };
 
   const filteredRecords = records.filter((record) =>
@@ -96,9 +123,31 @@ function TableProducts() {
         <button onClick={confirmDelete}>Confirmar</button>
         <button onClick={cancelDelete}>Cancelar</button>
       </Modal>
+
+      <Modal isOpen={showEditModal}>
+  <h2>Editar Registro</h2>
+  {editRecord && (
+    <form onSubmit={handleUpdate}>
+      <label>
+        Título:
+        <input type="text" value={editRecord.title} onChange={(e) => setEditRecord({...editRecord, title: e.target.value})} />
+      </label>
+      <label>
+        Precio:
+        <input type="number" value={editRecord.price} onChange={(e) => setEditRecord({...editRecord, price: Number(e.target.value)})} />
+      </label>
+      <label>
+        Categoría:
+        <input type="text" value={editRecord.category} onChange={(e) => setEditRecord({...editRecord, category: e.target.value})} />
+      </label>
+      <button type="submit">Aceptar</button>
+      <button type="button" onClick={() => setShowEditModal(false)}>Cancelar</button>
+    </form>
+  )}
+    </Modal>
+
     </div>
   );
 }
-
 
 export default TableProducts;
