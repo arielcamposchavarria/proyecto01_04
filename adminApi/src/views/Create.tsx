@@ -50,7 +50,7 @@ function Create() {
             </div>
             <div className='mb-2'>
                 <label htmlFor="image">Image</label>
-                <input type="text" name='image' className='form-control' placeholder='Enter Image'
+                <input type="text" name='image' className='form-control' placeholder='Enter Image Url'
                 onChange={e => setValues({...values, image: e.target.value}) }/>
             </div>
             <button className='btn btn-succes'>Submit</button>
