@@ -5,12 +5,24 @@ import { Link, useNavigate } from 'react-router-dom'
 function Home() {
     const [data, setData] = useState ([])
     const navigate = useNavigate();
-    useEffect(() => {
-        axios.get('https://fakestoreapi.com/products')
-        .then(res => setData(res.data))
-        .catch(err => console.log(err))
-    }, [])
 
+    useEffect(() => {
+        fetchData();
+    }, [])
+    const fetchData = () => {
+        const localData = localStorage.getItem('products');
+        if (localData) {
+            setData(JSON.parse(localData));
+        } else {     
+    axios.get('https://fakestoreapi.com/products')
+    .then(res => {
+        setData(res.data);
+    localStorage.setItem('products', JSON.stringify(res.data));
+    })
+    .catch(err => console.log(err))
+}
+};
+    
     const handleDelete = (id) => {
         const confirmDelete = window.confirm("Would you like to delete this product?");
         if (confirmDelete) {
