@@ -12,14 +12,16 @@ function Home() {
     }, [])
 
     const handleDelete = (id) => {
-        const confirm = window.confirm("would you like to Delete");
-        if(confirm){
-            axios.delete('https://fakestoreapi.com/products/' + id)
-            .then(res => {
-                    location.reload();
-            }).catch(err => console.log(err));
+        const confirmDelete = window.confirm("Would you like to delete this product?");
+        if (confirmDelete) {
+            axios.delete(`https://fakestoreapi.com/products/${id}`)
+                .then(res => {
+                    setData(prevData => prevData.filter(item => item.id !== id));
+                })
+                .catch(err => console.log(err));
         }
-        }
+    };
+
 
   return (
     <div className='d-flex flex-column justify-content-center align-items-center bg-light ch-100'>
