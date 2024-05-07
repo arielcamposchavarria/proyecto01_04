@@ -17,9 +17,10 @@ function Create() {
         event.preventDefault();
         axios.post('https://fakestoreapi.com/products', values)
         .then(res => {
+            setValues(res.data);
+
             console.log(res);
             navigate('/')
-            location.reload();
         })
         .catch(err => console.log(err))
         navigate('/')
