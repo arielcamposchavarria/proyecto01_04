@@ -33,30 +33,28 @@ function Update() {
     })
     .catch(err => console.log(err))
 }*/
-const handleChange = (e) => {
+/*const handleChange = (e) => {
     const { name, value } = e.target;
     setValues(prevValues => ({
         ...prevValues,
         [name]: value
     }));
-};
+};*/
 const handleUpdate = (event) => {
     event.preventDefault();
     axios.put('https://fakestoreapi.com/products/' + id, values) 
     .then(res => {
-        //setValues(res.data)
-        //console.log(res);
-        // Almacenar en localStorage y navegar
-        localStorage.setItem(`product_${id}`, JSON.stringify(res.data));
         setValues(res.data);
+         
+        console.log(res);
+        // Almacenar en localStorage y navegar
+        /*localStorage.setItem(`product_${id}`, JSON.stringify(res.data));
+        setValues(res.data);*/
         navigate('/');
     })
     .catch(err => console.log(err));
 };
-    // Aquí podrías guardar los valores en localStorage
-    // Por ejemplo:
-    /*localStorage.setItem(`product_${id}`, JSON.stringify(values));
-    navigate('/');*/
+     
 
 
   return (
