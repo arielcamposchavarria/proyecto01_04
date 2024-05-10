@@ -13,7 +13,7 @@ function Create() {
     })
 
     const navigate = useNavigate();
-    const handleSubmit = (event: { preventDefault: () => void; }) => {
+    const handleSubmit = () => {
         //event.preventDefault();
         axios.post('https://663e4425e1913c4767971f9e.mockapi.io/articulos', values)
         .then(res => {
@@ -30,7 +30,7 @@ function Create() {
         <h1> Add a Product</h1>
         <form onSubmit={handleSubmit}>
             <div className='mb-2'>
-                <label htmlFor="title">Title</label>
+                <label htmlFor="title">Name</label>
                 <input type="text" name='title' className='form-control' placeholder='Enter title'
                 onChange={e => setValues({...values, name: e.target.value}) }/>
             </div>
