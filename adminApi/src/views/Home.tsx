@@ -1,6 +1,7 @@
 import axios from 'axios'
 import { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
+import 'bootstrap/dist/css/bootstrap.min.css'
 
 function Home() {
     const [data, setData] = useState ([])
@@ -45,19 +46,19 @@ const linkStyle={
  
   return (
     <div className='d-flex flex-column justify-content-center align-items-center bg-light ch-100'>
-        <h1>List of Articles</h1>
+        <h1>Lista de articulos</h1>
         <div className='w-75 rounded bg-white border shadow p-4'>
             <div className='d-flex justify-content-end'>
-                <Link to="/create" style={linkStyle} className='btn btn-succes'>Add new  </Link>
+                <Link to="/create" style={linkStyle} className='btn btn-succes'>Agregar producto </Link>
             </div>
             <table className='table table-striped'>
                 <thead>
                     <tr>
                             <th>ID</th>
-                            <th>Name</th>
-                            <th>Price</th>
-                            <th>Category</th>
-                            <th>Action</th>
+                            <th>Nombre</th>
+                            <th>Precio</th>
+                            <th>Categoria</th>
+                            <th>Acciones</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -69,9 +70,9 @@ const linkStyle={
                                 <td>${d.price}</td>
                                 <td>{d.category}</td>
                                 <td>
-                                    <Link to={`/read/${d.id}`} style={{border: '1px solid rgba(255, 255, 255, 0.5)',borderRadius: '5px',color:'white', padding: '4px 4px',}} className='btn btn-sm btn-info me-2' >View</Link>
-                                    <Link to={`/update/${d.id}`}style={{border: '1px solid rgba(255, 255, 255, 0.5)',borderRadius: '5px',color:'white', padding: '4px 4px',}}className='btn btn-sm btn-primary me-2' >Edit</Link>
-                                    <button  onClick={e => handleDelete(d.id)}className='btn btn-sm btn-danger'>Delete</button>
+                                    <Link to={`/read/${d.id}`} style={{border: '1px solid rgba(255, 255, 255, 0.5)',borderRadius: '5px',color:'white', padding: '4px 4px',}} className='btn btn-sm btn-info me-2' >Ver</Link>
+                                    <Link to={`/update/${d.id}`}style={{border: '1px solid rgba(255, 255, 255, 0.5)',borderRadius: '5px',color:'white', padding: '4px 4px',}}className='btn btn-sm btn-primary me-2' >Editar</Link>
+                                    <button  onClick={e => handleDelete(d.id)}className='btn btn-sm btn-danger'>Eliminar</button>
 
                                 </td>
 
