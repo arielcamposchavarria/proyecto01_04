@@ -7,7 +7,7 @@ function Read() {
     const {id} = useParams();
 
     useEffect(() => {
-        axios.get('https://fakestoreapi.com/products/'+ id)
+        axios.get('https://663e4425e1913c4767971f9e.mockapi.io/articulos/'+ id)
             .then(res => setData(res.data))
             .catch(err => console.log(err))
     }, []);
@@ -26,12 +26,12 @@ function Read() {
             <div className='w-50 border bg-white shadow p-5 rounded'>
                 <h3>Details of Product</h3>
                 <div className='mb-2'>
-                      <img src={data.image} alt="Product" style={{maxWidth: '100px',borderRadius:"20px"}} />
+                      <img src={data.imagen} alt="Artículo" style={{maxWidth: '100px',borderRadius:"20px"}} />
                 </div>
 
                   
                 <div className='mb-2'>
-                    <strong>  {data.title}</strong>
+                    <strong>  {data.name}</strong>
                 </div>
                 <div className='mb-2'>
                     <strong>  ${data.price}</strong>
