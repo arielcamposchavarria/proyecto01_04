@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-
+// import 'bootstrap/dist/css/bootstrap.min.css'
 
 function Create() {
     const [values, setValues] = useState({
@@ -30,32 +30,32 @@ function Create() {
         <h1> Add a Product</h1>
         <form onSubmit={handleSubmit}>
             <div className='mb-2'>
-                <label htmlFor="title">Name</label>
+                <label htmlFor="title">Nombre</label>
                 <input type="text" name='title' className='form-control' placeholder='Enter title'
                 onChange={e => setValues({...values, name: e.target.value}) }/>
             </div>
             <div className='mb-2'>
-                <label htmlFor="price">Price</label>
+                <label htmlFor="price">Precio</label>
                 <input type="text" name="price" className='form-control' placeholder='Enter price'
                 onChange={e => setValues({...values, price: e.target.value}) }/>
             </div>
             <div className='mb-2'>
-                <label htmlFor="description">Description</label>
+                <label htmlFor="description">Descripcion</label>
                 <input type="text" name='description' className='form-control' placeholder='Enter title'
                 onChange={e => setValues({...values, description: e.target.value}) }/>
             </div>
             <div className='mb-2'>
-                <label htmlFor="category">Category</label>
+                <label htmlFor="category">Categoria</label>
                 <input type="text" name='category' className='form-control' placeholder='Enter Category'
                 onChange={e => setValues({...values, category: e.target.value}) }/>
             </div>
             <div className='mb-2'>
-                <label htmlFor="image">Image</label>
+                <label htmlFor="image">Imagen</label>
                 <input type="text" name='image' className='form-control' placeholder='Enter Image Url'
                 onChange={e => setValues({...values, imagen: e.target.value}) }/>
             </div>
-            <button className='btn btn-succes'>Submit</button>
-            <Link to='/' className='btn btn-primary ms-3'>Back</Link>
+            <button className='btn btn-succes'>Agregar</button>
+            <Link to='/' className='btn btn-primary ms-3'>Volver</Link>
         </form>
     </div>
   )
