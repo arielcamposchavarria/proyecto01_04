@@ -31,7 +31,7 @@ useEffect(() => {
 
     
     const handleDelete = (id) => {
-        const confirmDelete = window.confirm("Would you like to delete this product?");
+        const confirmDelete = window.confirm("Deseas eliminar este artículo?");
         if (confirmDelete) {
             axios.delete(`https://663e4425e1913c4767971f9e.mockapi.io/articulos/${id}`)
                 .then(res => {

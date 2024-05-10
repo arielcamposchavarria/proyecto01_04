@@ -24,7 +24,7 @@ function Read() {
     return (
         <div className='d-flex w-100 vh-100 justify-content-center align-items-center bg-light'>
             <div className='w-50 border bg-white shadow p-5 rounded'>
-                <h3>Details of Product</h3>
+                <h3>Detalles del artículo</h3>
                 <div className='mb-2'>
                       <img src={data.imagen} alt="Artículo" style={{maxWidth: '100px',borderRadius:"20px"}} />
                 </div>
@@ -46,8 +46,8 @@ function Read() {
 
                 }
                 
-                <Link to={`/update/${id}`} style={linkStyle} className='btn btn-success' >Edit</Link>
-                <Link to={"/"}  style={linkStyle}className='btn btn-primary ms-3' >Back</Link>
+                <Link to={`/update/${id}`} style={linkStyle} className='btn btn-success' >Editar</Link>
+                <Link to={"/"}  style={linkStyle}className='btn btn-primary ms-3' >Volver</Link>
             </div>
         </div>
     );
