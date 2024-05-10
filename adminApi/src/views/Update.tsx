@@ -40,30 +40,30 @@ function Update() {
         [name]: value
     }));
 };*/
-const handleUpdate = (event) => {
-    event.preventDefault();
+const handleUpdate = () => {
+    
     axios.put('https://663e4425e1913c4767971f9e.mockapi.io/articulos' + id, values) 
     .then(res => {
         setValues(res.data);
          
         //console.log(res);
-        // Almacenar en localStorage y navegar
-        /*localStorage.setItem(`product_${id}`, JSON.stringify(res.data));
-        setValues(res.data);*/
+        
+       // setValues(res.data);
         navigate('/');
     })
     .catch(err => console.log(err));
+    navigate('/');
 };
      
 
 
   return (
     <div className='d-flex w-100 vh-100 justify-content-center align-items-center bg light'>
-    <h1> Update Articles</h1>
+    <h1> Update Product</h1>
     <form onSubmit={handleUpdate} >
         <div className='mb-2'>
-            <label htmlFor="title">Title</label>
-            <input type="text" name='title' className='form-control' placeholder='Enter title'
+            <label htmlFor="name">Name</label>
+            <input type="text" name='name' className='form-control' placeholder='Enter name'
             value={values.name} onChange={e => setValues({...values, name: e.target.value}) }/>
         </div>
         <div className='mb-2'>
@@ -73,7 +73,7 @@ const handleUpdate = (event) => {
         </div>
         <div className='mb-2'>
             <label htmlFor="description">Description</label>
-            <input type="text" name='description' className='form-control' placeholder='Enter title'
+            <input type="text" name='description' className='form-control' placeholder='Enter name'
             value={values.description} onChange={e => setValues({...values, description: e.target.value}) }/>
         </div>
         <div className='mb-2'>
@@ -82,8 +82,8 @@ const handleUpdate = (event) => {
             value={values.category} onChange={e => setValues({...values, category: e.target.value}) }/>
         </div>
         <div className='mb-2'>
-            <label htmlFor="image">Image</label>
-            <input type="text" name='image' className='form-control' placeholder='Enter Image Url'
+            <label htmlFor="imagen">imagen</label>
+            <input type="text" name='imagen' className='form-control' placeholder='Enter imagen Url'
             value={values.imagen} onChange={e => setValues({...values, imagen: e.target.value}) }/>
         </div>
         <button className='btn btn-succes'>Update</button>
