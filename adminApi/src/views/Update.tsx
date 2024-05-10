@@ -8,16 +8,16 @@ function Update() {
     const navigate = useNavigate();
 
     const [values, setValues] = useState({
-        title: '',
+        name: '',
         price: '',
         description: '',
         category: '',
-        image: ''
+        imagen: ''
     })
 
 
     useEffect(() => {
-    axios.get('https://fakestoreapi.com/products/'+ id)
+    axios.get('https://663e4425e1913c4767971f9e.mockapi.io/articulos'+ id)
     .then(res => {
         setValues(res.data)
     })
@@ -42,11 +42,11 @@ function Update() {
 };*/
 const handleUpdate = (event) => {
     event.preventDefault();
-    axios.put('https://fakestoreapi.com/products/' + id, values) 
+    axios.put('https://663e4425e1913c4767971f9e.mockapi.io/articulos' + id, values) 
     .then(res => {
         setValues(res.data);
          
-        console.log(res);
+        //console.log(res);
         // Almacenar en localStorage y navegar
         /*localStorage.setItem(`product_${id}`, JSON.stringify(res.data));
         setValues(res.data);*/
@@ -59,12 +59,12 @@ const handleUpdate = (event) => {
 
   return (
     <div className='d-flex w-100 vh-100 justify-content-center align-items-center bg light'>
-    <h1> Update Product</h1>
+    <h1> Update Articles</h1>
     <form onSubmit={handleUpdate} >
         <div className='mb-2'>
             <label htmlFor="title">Title</label>
             <input type="text" name='title' className='form-control' placeholder='Enter title'
-            value={values.title} onChange={e => setValues({...values, title: e.target.value}) }/>
+            value={values.name} onChange={e => setValues({...values, name: e.target.value}) }/>
         </div>
         <div className='mb-2'>
             <label htmlFor="price">Price</label>
@@ -84,7 +84,7 @@ const handleUpdate = (event) => {
         <div className='mb-2'>
             <label htmlFor="image">Image</label>
             <input type="text" name='image' className='form-control' placeholder='Enter Image Url'
-            value={values.image} onChange={e => setValues({...values, image: e.target.value}) }/>
+            value={values.imagen} onChange={e => setValues({...values, imagen: e.target.value}) }/>
         </div>
         <button className='btn btn-succes'>Update</button>
         <Link to='/' className='btn btn-primary ms-3'>Back</Link>

@@ -7,30 +7,25 @@ function Home() {
     const navigate = useNavigate();
 
     useEffect(() => {
-        fetchData();
-    }, [])
-    const fetchData = () => {
-        const localData = localStorage.getItem('products');
-        if (localData) {
-            setData(JSON.parse(localData));
-        } else {
-            fetchFromApi();
-            }
-       }; 
+        
+    
+     
        const fetchFromApi =()=>{    
-    axios.get('https://fakestoreapi.com/products')
+    axios.get('https://663e4425e1913c4767971f9e.mockapi.io/articulos')
     .then(res => {
         setData(res.data);
-    localStorage.setItem('products', JSON.stringify(res.data));
+     
     })
     .catch(err => console.log(err))
 };
+fetchFromApi();
+}, [])
 
     
     const handleDelete = (id) => {
         const confirmDelete = window.confirm("Would you like to delete this product?");
         if (confirmDelete) {
-            axios.delete(`https://fakestoreapi.com/products/${id}`)
+            axios.delete(`https://663e4425e1913c4767971f9e.mockapi.io/articulos/${id}`)
                 .then(res => {
                     setData(prevData => prevData.filter(item => item.id !== id));
                 })
@@ -50,7 +45,7 @@ const linkStyle={
  
   return (
     <div className='d-flex flex-column justify-content-center align-items-center bg-light ch-100'>
-        <h1>List of Products</h1>
+        <h1>List of Articles</h1>
         <div className='w-75 rounded bg-white border shadow p-4'>
             <div className='d-flex justify-content-end'>
                 <Link to="/create" style={linkStyle} className='btn btn-succes'>Add new  </Link>
@@ -59,7 +54,7 @@ const linkStyle={
                 <thead>
                     <tr>
                             <th>ID</th>
-                            <th>Title</th>
+                            <th>Name</th>
                             <th>Price</th>
                             <th>Category</th>
                             <th>Action</th>
@@ -70,7 +65,7 @@ const linkStyle={
                         data.map((d, i) => (
                             <tr key={i}>
                                 <td>{d.id}</td>
-                                <td>{d.title}</td>
+                                <td>{d.name}</td>
                                 <td>${d.price}</td>
                                 <td>{d.category}</td>
                                 <td>
