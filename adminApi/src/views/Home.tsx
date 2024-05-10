@@ -1,16 +1,15 @@
 import axios from 'axios'
 import { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import 'bootstrap/dist/css/bootstrap.min.css'
+//import 'bootstrap/dist/css/bootstrap.min.css'
 
 function Home() {
     const [data, setData] = useState ([])
+    const [searchQuery, setSearchQuery] = useState('');
+    const [filteredData, setFilteredData] = useState([]);
     const navigate = useNavigate();
 
     useEffect(() => {
-        
-    
-     
        const fetchFromApi =()=>{    
     axios.get('https://663e4425e1913c4767971f9e.mockapi.io/articulos')
     .then(res => {
@@ -21,6 +20,14 @@ function Home() {
 };
 fetchFromApi();
 }, [])
+
+useEffect(() => {
+    setFilteredData(
+        data.filter(item =>
+            item.name.toLowerCase().includes(searchQuery.toLowerCase())
+        )
+    );
+}, [data, searchQuery]);
 
     
     const handleDelete = (id) => {
@@ -33,6 +40,9 @@ fetchFromApi();
                 .catch(err => console.log(err));
         }
     };
+    const handleSearchChange = (event) => {
+        setSearchQuery(event.target.value);
+    };
 const linkStyle={
     textDecoration: 'none',
   color: 'white',
@@ -42,15 +52,31 @@ const linkStyle={
   border: '2px solid rgba(255, 255, 255, 0.5)'
    
 };
+const searchStyle={
+    padding: '5px 10px',
+    height: '5px',
+    
+}
 
  
   return (
     <div className='d-flex flex-column justify-content-center align-items-center bg-light ch-100'>
         <h1>Lista de articulos</h1>
         <div className='w-75 rounded bg-white border shadow p-4'>
-            <div className='d-flex justify-content-end'>
-                <Link to="/create" style={linkStyle} className='btn btn-succes'>Agregar producto </Link>
+            
+            <div className='d-flex justify-content-end' >
+            <input
+                        type="text"
+                        placeholder="🕵️Buscar..."
+                        value={searchQuery}
+                        onChange={handleSearchChange}
+                        className="form-control me-2"
+                        style={searchStyle}
+                    />
+                <Link to="/create" style={linkStyle} className='btn btn-succes'>Agregar artículo </Link>
+                
             </div>
+
             <table className='table table-striped'>
                 <thead>
                     <tr>
@@ -63,7 +89,7 @@ const linkStyle={
                 </thead>
                 <tbody>
                     {
-                        data.map((d, i) => (
+                        filteredData.map((d, i) => (
                             <tr key={i}>
                                 <td>{d.id}</td>
                                 <td>{d.name}</td>
