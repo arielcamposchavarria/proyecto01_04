@@ -5,8 +5,11 @@ import { Link, useNavigate } from 'react-router-dom'
 
 function Home() {
     const [data, setData] = useState ([])
+
     const [searchQuery, setSearchQuery] = useState('');
     const [filteredData, setFilteredData] = useState([]);
+    const [currentPage, setCurrentPage] = useState(1);
+    const [itemsPerPage] = useState(5);
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -22,12 +25,14 @@ fetchFromApi();
 }, [])
 
 useEffect(() => {
+    const startIndex = (currentPage - 1) * itemsPerPage;
+    const endIndex = startIndex + itemsPerPage;
     setFilteredData(
-        data.filter(item =>
-            item.name.toLowerCase().includes(searchQuery.toLowerCase())
-        )
+        data
+            .filter(item => item.name.toLowerCase().includes(searchQuery.toLowerCase()))
+            .slice(startIndex, endIndex)
     );
-}, [data, searchQuery]);
+}, [data, searchQuery, currentPage, itemsPerPage]);
 
     
     const handleDelete = (id) => {
@@ -42,6 +47,7 @@ useEffect(() => {
     };
     const handleSearchChange = (event) => {
         setSearchQuery(event.target.value);
+        setCurrentPage(1);
     };
 const linkStyle={
     textDecoration: 'none',
@@ -57,7 +63,7 @@ const searchStyle={
     height: '5px',
     
 }
-
+const totalPages = Math.ceil(data.length / itemsPerPage);
  
   return (
     <div className='d-flex flex-column justify-content-center align-items-center bg-light ch-100'>
@@ -107,6 +113,26 @@ const searchStyle={
                     }
                 </tbody>
             </table>
+            <div className="d-flex justify-content-center">
+                    <nav aria-label="Page navigation">
+                        <ul className="pagination">
+                            {Array.from({ length: totalPages }, (_, index) => (
+                                <li
+                                    key={index}
+                                    className={`page-item ${currentPage === index + 1 ? 'active' : ''}`}
+                                    style={{ display: 'inline' }} // Agregar este estilo para la visualización horizontal
+                                >
+                                    <button
+                                        className="page-link"
+                                        onClick={() => setCurrentPage(index + 1)}
+                                    >
+                                        {index + 1}
+                                    </button>
+                                </li>
+                            ))}
+                        </ul>
+                    </nav>
+                </div>
         </div>
     </div>
   )
