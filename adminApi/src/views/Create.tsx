@@ -27,7 +27,7 @@ function Create() {
     }
   return (
     <div className='d-flex w-100 vh-100 justify-content-center align-items-center bg light'>
-        <h1> Add a Product</h1>
+        <h1> Agregar artículo</h1>
         <form onSubmit={handleSubmit}>
             <div className='mb-2'>
                 <label htmlFor="title">Nombre</label>
