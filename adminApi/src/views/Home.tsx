@@ -14,7 +14,7 @@ function Home() {
 
     useEffect(() => {
        const fetchFromApi =()=>{    
-    axios.get('https://663e4425e1913c4767971f9e.mockapi.io/articulos')
+    axios.get('https://663e4425e1913c4767971f9e.mockapi.io/Articulos')
     .then(res => {
         setData(res.data);
      
@@ -38,7 +38,7 @@ useEffect(() => {
     const handleDelete = (id) => {
         const confirmDelete = window.confirm("Deseas eliminar este artículo?");
         if (confirmDelete) {
-            axios.delete(`https://663e4425e1913c4767971f9e.mockapi.io/articulos/${id}`)
+            axios.delete(`https://663e4425e1913c4767971f9e.mockapi.io/Articulos/${id}`)
                 .then(res => {
                     setData(prevData => prevData.filter(item => item.id !== id));
                 })

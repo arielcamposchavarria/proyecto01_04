@@ -15,7 +15,7 @@ function Create() {
     const navigate = useNavigate();
     const handleSubmit = () => {
         //event.preventDefault();
-        axios.post('https://663e4425e1913c4767971f9e.mockapi.io/articulos', values)
+        axios.post('https://663e4425e1913c4767971f9e.mockapi.io/Articulos', values)
         .then(res => {
             setValues(res.data);
 
