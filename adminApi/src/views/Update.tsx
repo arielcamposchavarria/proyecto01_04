@@ -16,7 +16,7 @@ function Update() {
     })
 
     useEffect(() => {
-        axios.get('https://663e4425e1913c4767971f9e.mockapi.io/articulos/' + id)
+        axios.get('https://663e4425e1913c4767971f9e.mockapi.io/Articulos/' + id)
             .then(res => {
                 setValues(res.data)
             })
@@ -25,7 +25,7 @@ function Update() {
 
     const handleUpdate = (event) => {
         event.preventDefault();
-        axios.put('https://663e4425e1913c4767971f9e.mockapi.io/articulos/' + id, values)
+        axios.put('https://663e4425e1913c4767971f9e.mockapi.io/Articulos/' + id, values)
             .then(res => {
                 console.log(res);
                 navigate('/');
