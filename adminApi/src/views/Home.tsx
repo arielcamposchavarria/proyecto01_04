@@ -1,6 +1,7 @@
 import axios from 'axios'
 import { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
+import { Modal, Button } from 'react-bootstrap';
 //import 'bootstrap/dist/css/bootstrap.min.css'
 
 function Home() {
@@ -10,6 +11,8 @@ function Home() {
     const [filteredData, setFilteredData] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
     const [itemsPerPage] = useState(5);
+    const [showModal, setShowModal] = useState(false);
+    const [deleteId, setDeleteId] = useState(null);
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -36,14 +39,16 @@ useEffect(() => {
 
     
     const handleDelete = (id) => {
-        const confirmDelete = window.confirm("Deseas eliminar este artículo?");
-        if (confirmDelete) {
-            axios.delete(`https://663e4425e1913c4767971f9e.mockapi.io/Articulos/${id}`)
-                .then(res => {
-                    setData(prevData => prevData.filter(item => item.id !== id));
-                })
-                .catch(err => console.log(err));
-        }
+        setDeleteId(id);
+        setShowModal(true);
+    };
+    const confirmDelete = () => {
+        axios.delete(`https://663e4425e1913c4767971f9e.mockapi.io/Articulos/${deleteId}`)
+            .then(res => {
+                setData(prevData => prevData.filter(item => item.id !== deleteId));
+                setShowModal(false);
+            })
+            .catch(err => console.log(err));
     };
     const handleSearchChange = (event) => {
         setSearchQuery(event.target.value);
@@ -66,6 +71,7 @@ const searchStyle={
 const totalPages = Math.ceil(data.length / itemsPerPage);
  
   return (
+    <>
     <div className='d-flex flex-column justify-content-center align-items-center bg-light ch-100'>
         <h1>Lista de articulos</h1>
         <div className='w-75 rounded bg-white border shadow p-4'>
@@ -134,7 +140,23 @@ const totalPages = Math.ceil(data.length / itemsPerPage);
                     </nav>
                 </div>
         </div>
+        
     </div>
+    <Modal show={showModal} onHide={() => setShowModal(false)} style={{ zIndex: 9999 }}>
+            <Modal.Header closeButton>
+                <Modal.Title>Confirmar eliminación</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>¿Estás seguro de que deseas eliminar este artículo?</Modal.Body>
+            <Modal.Footer>
+                <Button variant="secondary" onClick={() => setShowModal(false)}>
+                    Cancelar
+                </Button>
+                <Button variant="danger" onClick={confirmDelete}>
+                    Eliminar
+                </Button>
+            </Modal.Footer>
+        </Modal>
+    </>
   )
 
 }
