@@ -16,7 +16,7 @@ function Update() {
     })
 
     useEffect(() => {
-        axios.get('https://663e4425e1913c4767971f9e.mockapi.io/articulos/' + id)
+        axios.get('https://663e4425e1913c4767971f9e.mockapi.io/Articulos/' + id)
             .then(res => {
                 setValues(res.data)
             })
@@ -25,7 +25,7 @@ function Update() {
 
     const handleUpdate = (event) => {
         event.preventDefault();
-        axios.put('https://663e4425e1913c4767971f9e.mockapi.io/articulos/' + id, values)
+        axios.put('https://663e4425e1913c4767971f9e.mockapi.io/Articulos/' + id, values)
             .then(res => {
                 console.log(res);
                 navigate('/');
@@ -35,7 +35,7 @@ function Update() {
 
     return (
         <div className='d-flex w-100 vh-100 justify-content-center align-items-center bg light'>
-            <h1> Actualizar Producto</h1>
+            <h1> Actualizar Articulo</h1>
             <form onSubmit={handleUpdate} >
                 <div className='mb-2'>
                     <label htmlFor="name">Nombre</label>
